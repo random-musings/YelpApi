@@ -11,8 +11,10 @@ var Manager = function(gmap, db)
 	self.menuExpanded = ko.observable(MENUPLUS);
 	self.showMenu = ko.observable();
 	self.selectedMarker = ko.observable();
+	self.currentBusiness = ko.observable();
 	
 	self.businessList.push(db[0]);
+	self.businessList.push(db[1]);
 
 	//our filtered business list
 	self.filteredBusinesses = ko.dependentObservable(function(){
@@ -69,12 +71,18 @@ var Manager = function(gmap, db)
 		//scroll the businesses that are filtered and show their markers on the map
 	self.setMapMarkers = ko.dependentObservable(function(){
 		self.map.deleteMarkers();
+		self.currentBusiness();
 		self.filteredBusinesses().forEach(function(business){
 				if(business)
 				{
+					var icon = business.icon();
+					if(self.currentBusiness() && business.name() ===self.currentBusiness().name())
+					{
+						icon = GOOGLEYELLOWICON;
+					}
 					 self.map.addMarker( 
 						new google.maps.LatLng(business.latitude(), business.longitude()),
-						business.icon(),
+						icon,
 						business.name(),
 						business);
 				}
@@ -82,7 +90,21 @@ var Manager = function(gmap, db)
 		return true;
 	});
 	
+	
+	
+	self.setCurrentBusiness = function(name)
+	{
+		self.filteredBusinesses().forEach(function(business){
+			if(business.name() ===name)
+			{
+				self.currentBusiness(business);
+			}
+		});
+	};
+	
 };
 
 
-ko.applyBindings(new Manager(gmap, db));
+
+var mgr = new  Manager(gmap, db);
+ko.applyBindings(mgr);

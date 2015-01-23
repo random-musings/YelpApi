@@ -139,27 +139,23 @@ function getInnerContent (business)
 */
 GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
 {
-		if(!infoWindow)
-		{
-			infoWindow = new google.maps.InfoWindow({content:getInnerContent(business)});
-		}
-		
+
 	//create the information window
     google.maps.event.addListener(marker, 'click', function() {
+		//mgr.resetMarkers();
+		mgr.setCurrentBusiness(marker.title);
 		
+		if(!infoWindow)
+		{
+			infoWindow = new google.maps.InfoWindow({content:getInnerContent(mgr.currentBusiness())});
+		}
+				
+		infoWindow.content =  getInnerContent(mgr.currentBusiness());
 		infoWindow.open(map,marker);
-		infoWindow.content=infoWindowContent;
-		var details = "";
 
 		//set the clicked marker to have a yellow icon
 		marker.setIcon (GOOGLEYELLOWICON);
-	
-		google.maps.event.addListener(infoWindow, 'domready', function () {
-			var details = getInnerContent(business);
-			//$("#details").empty();
-			//$("#details").html( details);
-			infoWindow.content = details;
-		});					
+		
     });
 };
 
