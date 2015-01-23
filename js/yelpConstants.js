@@ -6,6 +6,7 @@
 
 var MENUPLUS = "+";
 var MENUMINUS = "-";
+var MENUSIZE = 50;
 var DEFAULTFILTER = "type words to filter list";
 var CALLBACK = "<CALLBACK>";
 var CATEGORYFILTER = "";

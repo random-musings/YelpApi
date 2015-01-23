@@ -1,4 +1,10 @@
-
+/*
+* @class
+* 
+*  business that acts as our model for the observable array 
+* 	it holds all the information that is displayed on list
+*  
+*/
 
 var Business = function(businessIx,
 									businessId,
@@ -79,6 +85,14 @@ Business.prototype.loadCategories = function (categories)
 	}
 };
 
+/*
+* @public
+* @returns void
+* @description 
+* change the icon  according to the business itelf
+* deals have green icons
+* no deals have red icons
+*/
 Business.prototype.resetIcon = function()
 {
 	var googleMarker = GOOGLEPIN.replace(PINCHAR,this.businessIx())

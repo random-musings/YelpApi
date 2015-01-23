@@ -15,6 +15,9 @@ var Manager = function(gmap, db)
 	
 	self.businessList.push(db[0]);
 	self.businessList.push(db[1]);
+	self.businessList.push(db[2]);
+	self.businessList.push(db[3]);
+	self.businessList.push(db[4]);
 
 	//our filtered business list
 	self.filteredBusinesses = ko.dependentObservable(function(){
@@ -66,6 +69,8 @@ var Manager = function(gmap, db)
 	{
 		self.menuExpanded (   (self.menuExpanded ()===MENUPLUS?MENUMINUS:MENUPLUS));		
 		self.showMenu(self.menuExpanded ()===MENUMINUS);
+		
+			$("#well2").height( (window.innerHeight-100)+"px");
 	};
 	
 		//scroll the businesses that are filtered and show their markers on the map

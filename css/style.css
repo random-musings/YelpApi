@@ -65,10 +65,12 @@ a:active
 	border:0px;
 	border-radius: 0;
 	background-color:navy;
+	display:block;
     height: 90%;
     margin-bottom: 0;
     overflow: auto;
 	width:100%;
+
 }
 
 
