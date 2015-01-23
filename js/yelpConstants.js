@@ -6,7 +6,7 @@
 
 var MENUPLUS = "+";
 var MENUMINUS = "-";
-var DEFAULTFILTER = "filter by keyword";
+var DEFAULTFILTER = "type words to filter list";
 var CALLBACK = "<CALLBACK>";
 var CATEGORYFILTER = "";
 var DEAL = "DEAL";  //the string to filter out businesses that don't offer coupons/deals

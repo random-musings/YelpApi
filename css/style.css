@@ -58,7 +58,7 @@ a:active
     height:70px;
     overflow: hidden; /*better to decide how you want to handle this than to let the browser decide*/
 	padding: 0px;
-	max-width:300px;
+	width:100%;
 }
 
 #well2 {
@@ -68,13 +68,14 @@ a:active
     height: 90%;
     margin-bottom: 0;
     overflow: auto;
-	max-width:300px;
+	width:100%;
 }
 
 
 #listResults
 {
-	background-color: rgbs(0,0,0,0);
+	background-color: rgba(0,0,0,0);
+	max-width:260px;
 }
 
 .listAlign

@@ -8,8 +8,9 @@
 */
 
 //create content based on screen size
-var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
-var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
+var infoWindowContent = '<div id="content" class="infoWindowPano" style="min-width:270px"></div><div id="details" style="min-width:270px;	background-color:white;	font-size:1.3em;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
+//var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
+//var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
 var infoWindowDetails =		''+
 											' NAME<br/>'+
@@ -95,7 +96,7 @@ GoogleMap.prototype.toggleStreetView = function()
 *		adds a marker to the map
 *   code Credit: https://developers.google.com/maps/documentation/javascript/examples/marker-remove
 */
-GoogleMap.prototype.addMarker = function(pLocation, pIcon, pTitle)
+GoogleMap.prototype.addMarker = function(pLocation, pIcon, pTitle,pBusiness)
 {
 	console.log("in add marker "+pIcon+" "+pTitle);
 	var marker = new google.maps.Marker({
@@ -104,40 +105,63 @@ GoogleMap.prototype.addMarker = function(pLocation, pIcon, pTitle)
 		icon: pIcon,
 		title: pTitle});
 
-    //create the information window
-    google.maps.event.addListener(marker, 'click', function() {
-    
-		infoWindow.open(yelp.map.map,marker);
-		var business = yelp.findBusiness (marker);
-		var details = "";
-		//change markers back to their original icons
-		yelp.resetMarkers();
+   this.attachInfoWindow(this.map, marker, pBusiness);
 		
+	this.mapMarkers.push(marker);
+	return marker;
+};
+
+
+/*
+* @returns void
+*	@description 
+*  get the content for each popup window
+*/
+function getInnerContent (business)
+{
+	var details  = document.createElement("div");
+	if(business !== null)
+	{
+		details.innerHTML = infoWindowDetails.replace('NAME', business.name())
+			 .replace('ADDRESS', business.address())
+			 .replace('REVIEWURL', business.businessUrl())
+			 .replace('REVIEW', business.reviewCount())
+			 .replace('IMAGE', business.imageUri())
+			 .replace('DEALS',business.deals());
+	}
+	return details;
+}
+
+/*
+* @returns void
+*	@description 
+* Screates a clickable map marker on the google map
+*/
+GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
+{
+		if(!infoWindow)
+		{
+			infoWindow = new google.maps.InfoWindow({content:getInnerContent(business)});
+		}
+		
+	//create the information window
+    google.maps.event.addListener(marker, 'click', function() {
+		
+		infoWindow.open(map,marker);
+		infoWindow.content=infoWindowContent;
+		var details = "";
+
 		//set the clicked marker to have a yellow icon
 		marker.setIcon (GOOGLEYELLOWICON);
 	
 		google.maps.event.addListener(infoWindow, 'domready', function () {
-			
-				if(business !== null)
-			{
-				details = document.createElement("div");
-				details.innerHTML = infoWindowDetails.replace('NAME', business.name)
-					 .replace('ADDRESS', business.address)
-					 .replace('REVIEWURL', business.businessUrl)
-					 .replace('REVIEW', business.reviewCount)
-					 .replace('IMAGE', business.imageUri)
-					 .replace('DEALS',business.deals);
-			
-			}
-			$("#details").empty();
-			document.getElementById("details").appendChild( details);
-			
+			var details = getInnerContent(business);
+			//$("#details").empty();
+			//$("#details").html( details);
+			infoWindow.content = details;
 		});					
     });
-		
-	this.mapMarkers.push(marker);
 };
-
 
 		
 /*

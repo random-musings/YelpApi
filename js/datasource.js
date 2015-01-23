@@ -11,11 +11,11 @@
 				"http://m.yelp.com/biz/royalty-pizza-san-francisco",
 				"http://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png",
 				45,
-				37.2861099,
-					-122.1169922,
+				37.747999335966,
+				-122.6518351868,
 				 ["Pizza"],
 				  [{name:"$88 for $100","dealUrl":"http://www.yelp.com/deals/royalty-pizza-san-francisco-2"} ])
-				  ,
+				,
 				new Business(
 				2,
 				"greenlid-studiomix-san-francisco",
@@ -41,7 +41,7 @@ new Business(
 				"http://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png",
 				45,
 				37.7861099,
-					-122.0169922,
+				-122.0169922,
 				 ["Pizza"],
 				  [{name:"$88 for $100","dealUrl":"http://www.yelp.com/deals/royalty-pizza-san-francisco-2"} ])
 				  ,
@@ -58,7 +58,8 @@ new Business(
 				37.7847999335966,
 				-122.221518351868,
 				["Juice Bars & Smoothies", "Coffee & Tea", "Salad"],
-				[  {name:"$15 for $30", dealUrl:"http://www.yelp.com/deals/greenlid-studiomix-san-francisco"}]),
+				[  {name:"$15 for $30", dealUrl:"http://www.yelp.com/deals/greenlid-studiomix-san-francisco"}])
+				,
 				
 new Business(
 				5,
@@ -118,5 +119,5 @@ new Business(
 				-122.421518351868,
 				["Juice Bars & Smoothies", "Coffee & Tea", "Salad"],
 				[  {name:"$15 for $30", dealUrl:"http://www.yelp.com/deals/greenlid-studiomix-san-francisco"}])
-								
+					
 			];

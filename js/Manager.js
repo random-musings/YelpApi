@@ -1,11 +1,11 @@
 
-
+var marker;
 
 var Manager = function(gmap, db)
 {
 	var self = this;
 	self.map = gmap; //the google map
-	self.filter = ko.observable("pizza");
+	self.filter = ko.observable("");
 	self.includeDeals = ko.observable(false);
 	self.businessList = ko.observableArray();
 	self.menuExpanded = ko.observable(MENUPLUS);
@@ -13,13 +13,7 @@ var Manager = function(gmap, db)
 	self.selectedMarker = ko.observable();
 	
 	self.businessList.push(db[0]);
-	self.businessList.push(db[1]);
-	self.businessList.push(db[2]);
-	self.businessList.push(db[3]);
-	self.businessList.push(db[4]);
-	self.businessList.push(db[5]);
-	
-	
+
 	//our filtered business list
 	self.filteredBusinesses = ko.dependentObservable(function(){
 			if(self.includeDeals())
@@ -64,6 +58,8 @@ var Manager = function(gmap, db)
 				});
 		}, self.businessList());
 	
+	
+	
 	self.toggleMenu = function()
 	{
 		self.menuExpanded (   (self.menuExpanded ()===MENUPLUS?MENUMINUS:MENUPLUS));		
@@ -74,10 +70,14 @@ var Manager = function(gmap, db)
 	self.setMapMarkers = ko.dependentObservable(function(){
 		self.map.deleteMarkers();
 		self.filteredBusinesses().forEach(function(business){
-				self.map.addMarker( 
+				if(business)
+				{
+					 self.map.addMarker( 
 						new google.maps.LatLng(business.latitude(), business.longitude()),
 						business.icon(),
-						business.name());
+						business.name(),
+						business);
+				}
 			});
 		return true;
 	});

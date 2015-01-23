@@ -30,7 +30,7 @@ var Business = function(businessIx,
 	this.loadDeals(yelpDeals);
 	this.icon = ko.observable();
 	this.loadCategories(yelpCategories);
-	this.reviewCount = reviewCount;
+	this.reviewCount = ko.observable(reviewCount);
 	this.resetIcon();
 };
 
