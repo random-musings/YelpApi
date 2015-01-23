@@ -1,0 +1,91 @@
+* {box-sizing:border-box;}
+
+
+html, body, #map-canvas , .full-height{
+		font-family:arial;
+		font-size: 1em;
+		height: 100%;
+        margin: 0px;
+        padding: 0px;
+				
+      }
+
+a:link{
+	text-decoration:none;
+}
+
+a:visited
+{
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+a:active
+{
+	text-decoration:none;
+}
+	 
+
+.filterText
+{
+	width:70%;
+	color:black;
+}
+
+.menuPullOut
+{
+	color: white;
+	font-size: 2em;
+	padding: 2% 4% 2% 2%;
+}
+.menuPullOut:hover
+{
+	color:#AAAAFF
+}
+	 
+.overflow{
+	margin-bottom: 0;
+    overflow: auto;
+}
+
+#well1 {
+	background-color:navy;
+	border :0px;
+	color: white;
+    height:70px;
+    overflow: hidden; /*better to decide how you want to handle this than to let the browser decide*/
+	padding: 0px;
+	max-width:300px;
+}
+
+#well2 {
+	border:0px;
+	border-radius: 0;
+	background-color:navy;
+    height: 90%;
+    margin-bottom: 0;
+    overflow: auto;
+	max-width:300px;
+}
+
+
+#listResults
+{
+	background-color: rgbs(0,0,0,0);
+}
+
+.listAlign
+{
+	left:0px;
+}
+
+
+
+.yelpResult
+{	
+	background-color :white;
+	color:navy;
+}

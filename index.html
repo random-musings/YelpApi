@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+    <title>San Francisco</title>
+	<link rel="stylesheet"  href="css/bootstrap.min.css"/>
+    <link rel="stylesheet"  href="css/style.css"/>
+		
+		<!--3rd party javascripts-->
+		<script type="text/javascript" src="js/libs/sha1.js" async></script>
+		<script type="text/javascript" src="js/libs/oauth.js" async></script>
+		<script type="text/javascript" src="js/libs/jquery.min.js" async ></script>
+
+	
+  </head>
+  <body>
+  
+ 	<script type="text/html" id="yelp-businesses">		
+		
+			 <a data-bind="attr: {href: businessUrl}" class="list-group-item">
+					<span data-bind="text: name" ></span>
+					<br/>
+					<span data-bind="html: address"></span>
+					<br/>
+					<span data-bind="text: reviewCount"></span> reviews
+					<img data-bind="attr:{src:ratingsImg}" />
+			</a>
+		
+	</script>
+   
+  
+  
+  	<div id="map-canvas"></div>
+	<div id="listResults" class="full-height navbar-fixed-top">
+		<div class="col-md-3 full-height listAlign">  
+			<div id="well1">
+				<form onsubmit="return false">
+					<div class="text-center container-full" >
+						<input  class="filterText"  data-bind="value: filter, valueUpdate: 'afterkeydown'" placeholder="enter keywords to filter list" />  
+						<a href="#"  data-bind="click: toggleMenu">
+							<span class="menuPullOut"  data-bind="text: menuExpanded"></span>									
+						</a>
+						<br/>
+						
+						<input type="checkbox" data-bind="checked:includeDeals, valueUpdate: 'afterkeydown'"/>
+						include deals
+					</div>
+				</form>					
+			</div>
+			<div  id="well2"  data-bind="visible: showMenu">
+					<div class="list-group yelpResult">
+						<span  data-bind="template: {name: 'yelp-businesses', foreach: filteredBusinesses}"></span>
+					</div>
+			</div>			
+		</div>
+	</div>
+	
+  
+  	<!--google map scripts-->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+		<script src="js/GoogleMap.js"></script>
+		<script type="text/javascript" src="js/libs/knockout-3.2.0.js" ></script>
+		<script type='text/javascript'  src='js/libs/knockout.simpleGrid.3.0.js' ></script>		
+		<script type="text/javascript" src="js/yelpConstants.js" ></script>
+		
+			<!--initializing of yelp & map elements-->
+	<script type="text/javascript">
+		var santaCruzBoardwalk = new google.maps.LatLng(LATITUDE, LONGITUDE); 
+		gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
+	
+	</script>
+	
+
+		
+		<script type="text/javascript" src="js/Business.js"  ></script>
+		<script type="text/javascript" src="js/datasource.js"  ></script>
+		
+		<script type="text/javascript" src="js/Manager.js" ></script>
+
+
+    </body>
+</html>
+
