@@ -1,6 +1,6 @@
 
 Git Repostitory
-https://github.com/random-musings/NeighboorHoodMap
+https://github.com/random-musings/YelpApi
 
 How to use
 A working demo of the map is here 
@@ -38,13 +38,16 @@ How it works
 
 this application searches yelp for businesses in the San francisco area.
 markers are place on the google map indicating the location of each business.
-The businesses are shown 10 (or 4 if on mobile) at a time in a list view.
+The businesses are shown in a list view.
+The list view is initially collapsed.
+CLicking on the + icon will expand the list and show the items
+The + icon will changed to a - icon. clicking on the minus icon will collapse the menu.
+
 The markers are clickable and display address information as well as
 link to the reviews that this restaurant has received.
 
-The user can scroll through the list by clicking on the << and >> buttons at the bottom 
-of the list.  
-The list can be filtered by 
+The user can scroll through the list 
+The list and map markers can be filtered by 
 1. typing text into the "filter:" textbox.
 2. clicking of the "coupons" check box.
 
@@ -56,20 +59,8 @@ The filter matches on the following criteria
 2. yelp category
 3. address
 
-If the "coupons" text is checked off the business will be shown if 
+If "include deals" is checked off the business will be shown if 
 the business has deals.
-
-Changes for  mobile & smaller screens
-If the screen does not meet the minimum width of 400px or a minimum height of 800px
-1. the list of businesses will be placed at the far right edge of the screen. 
-2. the list of businesses will be cut to 4 (as opposed to 10).
-
-An <-- arrow button at the top of the list can be used to pull the list from the right side
-of the screen to the left side of the screen.
-
-the --> arrow button (which only appears when the list is on the left side of the screen)
-will move the list box to the right side of the screen so it is out of the way when viewing
-the map.
 
 
 Map Markers
@@ -89,8 +80,6 @@ Navigation
 * The map can be zoomed in or out
 * The markers can be clicked on to provide additional 
   information and links to the restaurants yelp page
-* << and >> scroll through the list of restaurants
-* The --> and <-- buttons will move the business list to the left or right side of the screen.
 * The business name in the list is clickable it will bring up the restaurants yelp window.
 
 
