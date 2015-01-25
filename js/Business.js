@@ -60,7 +60,10 @@ Business.prototype.loadDeals = function (deals)
 			dealHtml +="coupon: <a href='"+yelpDeal.dealUrl+"' target='_blank'>"+yelpDeal.name+"</a>  ";
 		}
 	}
-	this.deals.push(dealHtml);
+	if(dealHtml.length>0)
+	{
+		this.deals.push(dealHtml);
+	}
 };
 
 

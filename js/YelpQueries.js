@@ -20,9 +20,13 @@
 */
 
 var YelpQueries = function(	
+			ajaxSuccessCallback,
+			ajaxErrorCallback,
 			loadingCompleteCallback,
 			radius)
 {
+	this.ajaxErrorCallback = ajaxErrorCallback;
+	this.ajaxSuccessCallback = ajaxSuccessCallback;
 	this.radius  = radius;
 	this.loadCompleteFunc = loadingCompleteCallback;
 	this.yelpBusinesses  = [];
@@ -84,10 +88,10 @@ YelpQueries.prototype.fillYelpData = function(data)
 {
 	console.log("IN PARSE YELP");
 	console.log(data);
-	yelpBusinesses.loadYelpData(data, true);
+	this.loadYelpData(data, true);
 	
 	//search yelp again (if we can expect to get more results)
-	yelpBusinesses.loadMoreBusinesses(data.businesses.length);
+	this.loadMoreBusinesses(data.businesses.length);
 };
 
 
@@ -120,7 +124,7 @@ YelpQueries.prototype.loadYelpData = function (yelpResponseData, append)
 			busCount++;
 			business.ix = busCount; //record the order of the search results
 			
-			var yelpBusiness = new YelpBusiness(
+			var yelpBusiness = new Business(
 										business.ix,
 										business.id,
 										business.name,
@@ -132,7 +136,7 @@ YelpQueries.prototype.loadYelpData = function (yelpResponseData, append)
 										business.review_count,
 										business.location.coordinate.latitude,
 										business.location.coordinate.longitude,
-										this.formatCategories(),
+										this.formatCategories(business),
 										business.deals,
 										business.review_count,
 										business.snippet_image_url
@@ -172,7 +176,7 @@ YelpQueries.prototype.formatCategories = function(yelpBusiness)
 	var catIx;
 	for(catIx in yelpBusiness.categories)
 	{
-		categories.push(business.categories[catIx][0]);
+		categories.push(yelpBusiness.categories[catIx][0]);
 	}
 	return categories;
 }
@@ -208,7 +212,7 @@ YelpQueries.prototype.freshNonce = function()
 YelpQueries.prototype.getYelpParams = function(offset)
 {
 	var url =  YELPPARAMETERS.replace(SEARCHTERM,YELPSEARCHTERM)
-								.replace(CALLBACK, "yelpBusinesses.fillYelpData")
+								.replace(CALLBACK, this.ajaxSuccessCallback)
 								.replace(RADIUSFILTER, this.radius)
 								.replace(OFFSET, offset);
 	return url;
@@ -262,12 +266,12 @@ YelpQueries.prototype.searchYelp = function(offset)
 				dataType: "jsonp",
 				type: "GET",
 				cache: true, //very very important disables the _=[timestamp] at the end of the request
-				success: function(data){
-						console.log(data);
-						yelpBusinesses.fillYelpData(data);
-						},
-				jsonpCallback: "yelpBusinesses.fillYelpData",
-				error: function (xhr, status, errorThrown) { yelp.errorInAjax(xhr, status, errorThrown);}
+				//success: function(data){
+				//		console.log(data);
+				//		yelpBusinesses.fillYelpData(data);
+				//		},
+				jsonpCallback: this.ajaxSuccessCallback,
+				error: function (xhr, status, errorThrown) { yelpQuery.errorInAjax(xhr, status, errorThrown);}
 			});
 		return false;
 };
@@ -283,7 +287,13 @@ YelpQueries.prototype.errorInAjax = function(xhr, status, errorThrown)
 	console.log("ERROR");
 	console.log(xhr+" "+status+" "+errorThrown);
 	console.log("offset = "+this.offset);
-
+	if(this.offset>MAXRESULTS)
+	{
+		if(this.loadCompleteFunc)
+		{
+			this.loadCompleteFunc();
+		}
+	}
 };
 
 

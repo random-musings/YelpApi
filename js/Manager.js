@@ -13,11 +13,13 @@ var Manager = function(gmap, db)
 	self.selectedMarker = ko.observable();
 	self.currentBusiness = ko.observable();
 	
-	self.businessList.push(db[0]);
-	self.businessList.push(db[1]);
-	self.businessList.push(db[2]);
-	self.businessList.push(db[3]);
-	self.businessList.push(db[4]);
+	db.forEach(function(business){self.businessList.push(business);});
+
+	//self.businessList.push(db[0]);
+	//self.businessList.push(db[1]);
+	//self.businessList.push(db[2]);
+	//self.businessList.push(db[3]);
+	//self.businessList.push(db[4]);
 
 	//our filtered business list
 	self.filteredBusinesses = ko.dependentObservable(function(){
@@ -77,6 +79,7 @@ var Manager = function(gmap, db)
 	self.setMapMarkers = ko.dependentObservable(function(){
 		self.map.deleteMarkers();
 		self.currentBusiness();
+		var mapCenter;
 		self.filteredBusinesses().forEach(function(business){
 				if(business)
 				{
@@ -90,8 +93,10 @@ var Manager = function(gmap, db)
 						icon,
 						business.name(),
 						business);
+						mapCenter = new google.maps.LatLng(business.latitude(), business.longitude());
 				}
 			});
+			self.map.map.setCenter(mapCenter);
 		return true;
 	});
 	
@@ -113,12 +118,12 @@ var Manager = function(gmap, db)
 
 function initKnockout()
 {
-	var mgr = new  Manager(gmap, db);
+	mgr= new  Manager(gmap, yelpQuery.yelpBusinesses);
 	ko.applyBindings(mgr);
 
 };
 
-
-var yelpBusinesses =   new YelpQueries(initKnockout,800);
-yelpBusinesses.loadBusinesses();
+var mgr ;
+var yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,800);
+yelpQuery.loadBusinesses();
 

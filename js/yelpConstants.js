@@ -57,7 +57,7 @@ var YELPPARAMETERS  =
 						//+"&deals_filter=true"
 						//"&sort=1"
 						;
-var ZOOM =  10;
+var ZOOM =  16;
 
 
 var RESULTSEXPANDED= true;

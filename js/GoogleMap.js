@@ -155,7 +155,8 @@ GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
 
 		//set the clicked marker to have a yellow icon
 		marker.setIcon (GOOGLEYELLOWICON);
-		
+		var latLng  = marker.getPosition();
+		map.setCenter(latLng);
     });
 };
 
