@@ -70,7 +70,7 @@ var Manager = function(gmap, db)
 		self.menuExpanded (   (self.menuExpanded ()===MENUPLUS?MENUMINUS:MENUPLUS));		
 		self.showMenu(self.menuExpanded ()===MENUMINUS);
 		
-			$("#well2").height( (window.innerHeight-100)+"px");
+		$("#well2").height( (window.innerHeight-MENUSIZE)+"px");
 	};
 	
 		//scroll the businesses that are filtered and show their markers on the map
@@ -111,5 +111,14 @@ var Manager = function(gmap, db)
 
 
 
-var mgr = new  Manager(gmap, db);
-ko.applyBindings(mgr);
+function initKnockout()
+{
+	var mgr = new  Manager(gmap, db);
+	ko.applyBindings(mgr);
+
+};
+
+
+var yelpBusinesses =   new YelpQueries(initKnockout,800);
+yelpBusinesses.loadBusinesses();
+
