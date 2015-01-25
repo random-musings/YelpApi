@@ -44,6 +44,8 @@ var LISTRIGHTPCT = "80%";
 var LISTRIGHTPCTMOBILE = "90%";
 var LISTLEFTPCT = "0%";
 var YELPSEARCHTERM ="food";
+var MAPCENTERLONGITUDE = -122.415;
+var MAPCENTERLATITUDE = 37.785448674044524;
 
 var YELPPARAMETERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
@@ -57,7 +59,7 @@ var YELPPARAMETERS  =
 						//+"&deals_filter=true"
 						//"&sort=1"
 						;
-var ZOOM =  16;
+var ZOOM =  14;
 
 
 var RESULTSEXPANDED= true;

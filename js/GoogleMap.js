@@ -8,7 +8,7 @@
 */
 
 //create content based on screen size
-var infoWindowContent = '<div id="content" class="infoWindowPano" style="min-width:270px"></div><div id="details" style="min-width:270px;	background-color:white;	font-size:1.3em;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
+var infoWindowContent = '<div id="content" class="infoWindowPano" style="min-width:280px"></div><div id="details" style="min-width:270px;	background-color:white;	font-size:1.3em;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 //var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 //var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
@@ -17,7 +17,7 @@ var infoWindowDetails =		''+
 											'  ADDRESS <br/> '+
 											' <a href="REVIEWURL" target="_blank">REVIEW reviews</a><br/>'+
 											'DEALS'+
-											'<center><img src="IMAGE" style="left:0:top:0;height:145px" /></center> ';
+											'<center><img src="IMAGE" style="left:0:top:0;height:145px;width:145px;" /></center> ';
 
 //will be set in neighborhoodview load
 var infoWindow;
@@ -156,6 +156,8 @@ GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
 		//set the clicked marker to have a yellow icon
 		marker.setIcon (GOOGLEYELLOWICON);
 		var latLng  = marker.getPosition();
+		latLng.k = latLng.k  + 0.01;
+		latLng.D = latLng.D - 0.00 ;
 		map.setCenter(latLng);
     });
 };

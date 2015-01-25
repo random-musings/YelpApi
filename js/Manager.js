@@ -13,13 +13,9 @@ var Manager = function(gmap, db)
 	self.selectedMarker = ko.observable();
 	self.currentBusiness = ko.observable();
 	
+	
+	//load the business array
 	db.forEach(function(business){self.businessList.push(business);});
-
-	//self.businessList.push(db[0]);
-	//self.businessList.push(db[1]);
-	//self.businessList.push(db[2]);
-	//self.businessList.push(db[3]);
-	//self.businessList.push(db[4]);
 
 	//our filtered business list
 	self.filteredBusinesses = ko.dependentObservable(function(){
@@ -96,7 +92,7 @@ var Manager = function(gmap, db)
 						mapCenter = new google.maps.LatLng(business.latitude(), business.longitude());
 				}
 			});
-			self.map.map.setCenter(mapCenter);
+			
 		return true;
 	});
 	
@@ -123,7 +119,5 @@ function initKnockout()
 
 };
 
-var mgr ;
-var yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,800);
-yelpQuery.loadBusinesses();
+
 

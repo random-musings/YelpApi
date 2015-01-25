@@ -19,6 +19,7 @@
  	<script type="text/html" id="yelp-businesses">		
 		
 			 <a data-bind="attr: {href: businessUrl}" class="list-group-item">
+					<span data-bind="text: businessIx"></span>.
 					<span data-bind="text: name" ></span>
 					<br/>
 					<span data-bind="html: address"></span>
@@ -66,9 +67,25 @@
 		
 			<!--initializing of yelp & map elements-->
 	<script type="text/javascript">
+		
+		
 		var santaCruzBoardwalk = new google.maps.LatLng(LATITUDE, LONGITUDE); 
-		gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
+		var gmap;
+		var mgr ;
+		var yelpQuery ;
+		google.maps.event.addDomListener(window, 'load', initialize);
 	
+	///this function is called after the map has loaded 
+	//it makes calls to yelp to load our business list
+		function initialize()
+		{
+			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
+			gmap.map.setCenter(new google.maps.LatLng(MAPCENTERLATITUDE,MAPCENTERLONGITUDE));
+			
+			yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,800);
+			yelpQuery.loadBusinesses();
+		}
+		
 	</script>
 	
 
