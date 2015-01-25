@@ -1,41 +1,58 @@
 
-var marker;
-
-var Manager = function(gmap, db)
+/*
+* @class  neighborHoodModel 
+* holds the knockout data in observable arrays
+* accessed by Manager 
+*/
+var NeighborHoodModel =  function(map,db)
 {
 	var self = this;
 	self.map = gmap; //the google map
-	self.filter = ko.observable("");
-	self.includeDeals = ko.observable(false);
-	self.businessList = ko.observableArray();
-	self.menuExpanded = ko.observable(MENUPLUS);
-	self.showMenu = ko.observable();
-	self.selectedMarker = ko.observable();
-	self.currentBusiness = ko.observable();
-	
-	
-	//load the business array
-	db.forEach(function(business){self.businessList.push(business);});
+	self.filter = ko.observable(""); // the current filter for the  yelp businesses
+	self.includeDeals = ko.observable(false); //filters out businesses based on whether deals are available
+	self.businessList = ko.observableArray();//the businesses from yelp
+	self.menuExpanded = ko.observable(MENUPLUS); //the character + -  indicates whiether clicking will collapse or expand
+	self.showMenu = ko.observable(); //indicates if menu is visible
+	 
+	self.currentBusiness = ko.observable();// the current business whose map marker was clicked
 
+		//load the business array
+	db.forEach(function(business){self.businessList.push(business);});
+};
+
+
+
+/*
+* @class  Manager 
+* this function hadles the filtering/sorting of businesses in the list 
+* and the adding/deleting of map markers from the google maps
+*  
+*/
+var Manager = function(gmap, db)
+{
+	var self = this;
+	self.model = new NeighborHoodModel(gmap,db);
+	
 	//our filtered business list
+	//the model is filtered using model.filter and model.includeDeals
 	self.filteredBusinesses = ko.dependentObservable(function(){
-			if(self.includeDeals())
+			if(self.model.includeDeals())
 			{
-				return ko.utils.arrayFilter(self.businessList(),function(item){
+				return ko.utils.arrayFilter(self.model.businessList(),function(item){
 							return (item.deals  && item.deals().length>0);
 						});
 			}
 			
-			var filterText = self.filter();
+			var filterText = self.model.filter();
 			//only apply filters if we have 2 or more characters
 			if(!filterText || filterText.length<3)
 			{
-				return self.businessList();
+				return self.model.businessList();
 			}
 			filterText = filterText.toUpperCase();
 		
 			//apply the filter to everything else
-			return  ko.utils.arrayFilter(self.businessList(),function(business){
+			return  ko.utils.arrayFilter(self.model.businessList(),function(business){
 					//match on business name
 					if(business.name().toUpperCase().indexOf(filterText)>-1)
 					{
@@ -59,37 +76,40 @@ var Manager = function(gmap, db)
 						return true;
 					}
 				});
-		}, self.businessList());
+		}, self.model.businessList());
 	
-	
-	
+
+	// this is called whenever the plus/minus is clicked
 	self.toggleMenu = function()
 	{
-		self.menuExpanded (   (self.menuExpanded ()===MENUPLUS?MENUMINUS:MENUPLUS));		
-		self.showMenu(self.menuExpanded ()===MENUMINUS);
+		self.model.menuExpanded (   (self.model.menuExpanded ()===MENUPLUS?MENUMINUS:MENUPLUS));		
+		self.model.showMenu(self.model.menuExpanded ()===MENUMINUS);
 		
+		//alter the height of the list so that we can alway scroll 
+		//to the bottom of the list
 		$("#well2").height( (window.innerHeight-MENUSIZE)+"px");
 	};
 	
 		//scroll the businesses that are filtered and show their markers on the map
 	self.setMapMarkers = ko.dependentObservable(function(){
-		self.map.deleteMarkers();
-		self.currentBusiness();
-		var mapCenter;
+		self.model.map.deleteMarkers();
+		var currBusiness  = self.model.currentBusiness();
+		
 		self.filteredBusinesses().forEach(function(business){
 				if(business)
 				{
 					var icon = business.icon();
-					if(self.currentBusiness() && business.name() ===self.currentBusiness().name())
-					{
+					if(currBusiness&& business.name() ===currBusiness.name())
+					{	//current business is selected
 						icon = GOOGLEYELLOWICON;
 					}
-					 self.map.addMarker( 
+					
+					//re-add the map markers to match the filtering/selection
+					 self.model.map.addMarker( 
 						new google.maps.LatLng(business.latitude(), business.longitude()),
 						icon,
 						business.name(),
 						business);
-						mapCenter = new google.maps.LatLng(business.latitude(), business.longitude());
 				}
 			});
 			
@@ -97,13 +117,13 @@ var Manager = function(gmap, db)
 	});
 	
 	
-	
+	//this is the business that was selected by clicking on the map marker
 	self.setCurrentBusiness = function(name)
 	{
 		self.filteredBusinesses().forEach(function(business){
 			if(business.name() ===name)
 			{
-				self.currentBusiness(business);
+				self.model.currentBusiness(business);
 			}
 		});
 	};
@@ -111,7 +131,7 @@ var Manager = function(gmap, db)
 };
 
 
-
+//this is called after the 
 function initKnockout()
 {
 	mgr= new  Manager(gmap, yelpQuery.yelpBusinesses);

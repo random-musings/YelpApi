@@ -9,8 +9,6 @@
 
 //create content based on screen size
 var infoWindowContent = '<div id="content" class="infoWindowPano" style="min-width:280px"></div><div id="details" style="min-width:270px;	background-color:white;	font-size:1.3em;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
-//var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
-//var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
 var infoWindowDetails =		''+
 											' NAME<br/>'+
@@ -98,7 +96,7 @@ GoogleMap.prototype.toggleStreetView = function()
 */
 GoogleMap.prototype.addMarker = function(pLocation, pIcon, pTitle,pBusiness)
 {
-	console.log("in add marker "+pIcon+" "+pTitle);
+	//console.log("in add marker "+pIcon+" "+pTitle);
 	var marker = new google.maps.Marker({
 		position: pLocation,
 		map: this.map,
@@ -147,10 +145,10 @@ GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
 		
 		if(!infoWindow)
 		{
-			infoWindow = new google.maps.InfoWindow({content:getInnerContent(mgr.currentBusiness())});
+			infoWindow = new google.maps.InfoWindow({content:getInnerContent(mgr.model.currentBusiness())});
 		}
 				
-		infoWindow.content =  getInnerContent(mgr.currentBusiness());
+		infoWindow.content =  getInnerContent(mgr.model.currentBusiness());
 		infoWindow.open(map,marker);
 
 		//set the clicked marker to have a yellow icon

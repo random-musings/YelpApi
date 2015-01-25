@@ -41,13 +41,8 @@ var YelpQueries = function(
 */
 YelpQueries.prototype.loadBusinesses = function()
 {
-	//load businesses with deals
-	//var ix;
-	//for (	ix in YelpBusinessDeals)
-	//{
-	//	this.yelpBusinesses.push(YelpBusinessDeals[ix]);
-	//	this.offset++;
-	//}
+	//load some businesses with dels because yelp doesn't always return these
+	this.loadBusinessesWithDeals();
 	
 	//search yelp
 	this.searchYelp(this.offset);
@@ -124,6 +119,7 @@ YelpQueries.prototype.loadYelpData = function (yelpResponseData, append)
 			busCount++;
 			business.ix = busCount; //record the order of the search results
 			
+			//create our data array
 			var yelpBusiness = new Business(
 										business.ix,
 										business.id,
@@ -296,4 +292,47 @@ YelpQueries.prototype.errorInAjax = function(xhr, status, errorThrown)
 	}
 };
 
+/*
+* @returns void
+*	@description 
+*		this has been added to show that icons will restyle themselves
+*		when deals are available
+*/
+YelpQueries.prototype.loadBusinessesWithDeals = function()
+{
+	var db = [
+				new Business(
+				1,
+				"royalty-pizza-san-francisco",
+				 "Royalty Pizza",
+				"http://www.yelp.com/biz/royalty-pizza-san-francisco",
+				 "http://s3-media2.fl.yelpcdn.com/bphoto/D-HSxr-OUfBnl4p_p0DYKA/ms.jpg",
+				"829 Geary St<br/> San Francisco US  94109  ",
+				"http://m.yelp.com/biz/royalty-pizza-san-francisco",
+				"http://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png",
+				45,
+				37.7861099,
+				-122.4169922,
+				 ["Pizza"],
+				  [{name:"$88 for $100","dealUrl":"http://www.yelp.com/deals/royalty-pizza-san-francisco-2"} ])
+				,
+				new Business(
+				2,
+				"greenlid-studiomix-san-francisco",
+				"GreenLid Studiomix",
+				"http://www.yelp.com/biz/greenlid-studiomix-san-francisco",
+				 "http://s3-media1.fl.yelpcdn.com/bphoto/5m2iSkqHdFrLffcoEdXesQ/ms.jpg",
+				"1000 Van Ness Ave<br/> 3rd Fl<br/>  San Francisco US  94109  ",
+				"http://m.yelp.com/biz/greenlid-studiomix-san-francisco",
+				"http://s3-media1.fl.yelpcdn.com/assets/2/www/img/c7623205d5cd/ico/stars/v1/stars_small_5.png",
+				2,
+				37.7847999335966,
+				-122.421518351868,
+				["Juice Bars & Smoothies", "Coffee & Tea", "Salad"],
+				[  {name:"$15 for $30", dealUrl:"http://www.yelp.com/deals/greenlid-studiomix-san-francisco"}])
+	];
+	this.yelpBusinesses.push(db[0]);
+	this.yelpBusinesses.push(db[1]);
 
+	this.offset += 2;
+};

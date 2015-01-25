@@ -38,18 +38,18 @@
 			<div id="well1">
 				<form onsubmit="return false">
 					<div class="text-center container-full" >
-						<input  class="filterText"  data-bind="value: filter, valueUpdate: 'afterkeydown'" placeholder="type to filter list" />  
+						<input  class="filterText"  data-bind="value: model.filter, valueUpdate: 'afterkeydown'" placeholder="type to filter list" />  
 						<a href="#"  data-bind="click: toggleMenu">
-							<span class="menuPullOut"  data-bind="text: menuExpanded"></span>									
+							<span class="menuPullOut"  data-bind="text: model.menuExpanded"></span>									
 						</a>
 						<br/>
 						
-						<input type="checkbox" data-bind="checked:includeDeals, valueUpdate: 'afterkeydown'"/>
+						<input type="checkbox" data-bind="checked:model.includeDeals, valueUpdate: 'afterkeydown'"/>
 						include deals
 					</div>
 				</form>					
 			</div>
-			<div  class="" id="well2"  data-bind="visible: showMenu">
+			<div  class="" id="well2"  data-bind="visible: model.showMenu">
 					<div class="list-group  yelpResult">
 						<span  data-bind="template: {name: 'yelp-businesses', foreach: filteredBusinesses}"></span>
 					</div>
@@ -79,9 +79,11 @@
 	//it makes calls to yelp to load our business list
 		function initialize()
 		{
+		//initia our map
 			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
 			gmap.map.setCenter(new google.maps.LatLng(MAPCENTERLATITUDE,MAPCENTERLONGITUDE));
 			
+			//query yelp to get data for mapping
 			yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,800);
 			yelpQuery.loadBusinesses();
 		}
@@ -91,7 +93,6 @@
 
 		
 		<script type="text/javascript" src="js/Business.js"  ></script>
-		<script type="text/javascript" src="js/datasource.js"  ></script>
 		<script type="text/javascript" src="js/YelpQueries.js" ></script>		
 		<script type="text/javascript" src="js/Manager.js" ></script>
 
