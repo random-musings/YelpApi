@@ -15,7 +15,7 @@ var infoWindowDetails =		''+
 											'  ADDRESS <br/> '+
 											' <a href="REVIEWURL" target="_blank">REVIEW reviews</a><br/>'+
 											'DEALS'+
-											'<center><img src="IMAGE" style="left:0:top:0;height:145px;width:145px;" /></center> ';
+											'<center><img src="IMAGE" style="left:0:top:0;height:130px;width:145px;" /></center> ';
 
 //will be set in neighborhoodview load
 var infoWindow;
@@ -120,7 +120,7 @@ function getInnerContent (business)
 	var details  = document.createElement("div");
 	if(business !== null)
 	{
-		details.innerHTML = infoWindowDetails.replace('NAME', business.name())
+		details.innerHTML = infoWindowDetails.replace('NAME', business.name().substring(0,20))
 			 .replace('ADDRESS', business.address())
 			 .replace('REVIEWURL', business.businessUrl())
 			 .replace('REVIEW', business.reviewCount())

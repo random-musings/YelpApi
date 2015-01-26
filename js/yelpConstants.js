@@ -17,6 +17,7 @@ var PINCHAR = "<PINCHAR>"; //used to replace the number of the pin marker on the
 var PINCOLOR = "<PINCOLOR>"; //used to replace the pin color of the marker
 var GOOGLEPIN = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+PINCHAR+"|"+PINCOLOR;
 var GOOGLEYELLOWICON = "http://google.com/mapfiles/ms/micons/yellow-dot.png"; //a selected pin marker
+var HTTPMETHOD = "GET";
 var YELPURI = "http://api.yelp.com/v2/search"; //the search URI for yelp
 var RADIUSFILTER = "<RADIUSFILTER>"; //how far to search for businesses
 var SEARCHTERM = "<SEARCHTERM>"; //the keyword used to find businesses
