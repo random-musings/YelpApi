@@ -51,6 +51,16 @@ a:active
     overflow: auto;
 }
 
+#errorMsg
+{
+	background-color: navy;
+	color:white;
+	position: absolute;
+	text-align: middle;
+	top: 0px;
+	visible: hidden;
+}
+
 #well1 {
 	background-color:navy;
 	border :0px;
@@ -70,7 +80,6 @@ a:active
     margin-bottom: 0;
     overflow: auto;
 	width:100%;
-
 }
 
 

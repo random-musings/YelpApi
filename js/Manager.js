@@ -141,3 +141,20 @@ function initKnockout()
 
 
 
+function errorRetrievingYelp (xhr, status, errorThrown) 
+{
+	if(status==="timeout")
+	{
+		$("#errorMsg").text( "Unable to connect to yelp.        Please refresh your browser and try again ");
+		$("#dealsId").hide();
+	}
+};
+
+function errorRetrievingMap () 
+{
+	if(status==="timeout")
+	{
+		$("#errorMsg").text( "Unable to connect to Google Maps.        Please refresh your browser and try again ");
+		$("#dealsId").hide();
+	}
+};

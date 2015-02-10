@@ -31,21 +31,24 @@
 	</script>
    
   
-  
   	<div id="map-canvas"></div>
+
 	<div id="listResults" class=" navbar-fixed-top">
-		<div class=" listAlign">  
+		<div class="listAlign">  
 			<div id="well1">
+					<div id="errorMsg"></div>
 				<form onsubmit="return false">
 					<div class="text-center container-full" >
+						<span id="dealsId">
 						<input  class="filterText"  data-bind="value: model.filter, valueUpdate: 'afterkeydown'" placeholder="type to filter list" />  
-						<a href="#"  data-bind="click: toggleMenu">
-							<span class="menuPullOut"  data-bind="text: model.menuExpanded"></span>									
-						</a>
-						<br/>
+							<a href="#"  data-bind="click: toggleMenu">
+								<span class="menuPullOut"  data-bind="text: model.menuExpanded"></span>									
+							</a>
+							<br/>
 						
-						<input type="checkbox" data-bind="checked:model.includeDeals, valueUpdate: 'afterkeydown'"/>
-						include deals
+							<input type="checkbox" data-bind="checked:model.includeDeals, valueUpdate: 'afterkeydown'"/>
+							include deals
+						</span>
 					</div>
 				</form>					
 			</div>
@@ -90,9 +93,13 @@
 		//initia our map
 			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
 			gmap.map.setCenter(new google.maps.LatLng(MAPCENTERLATITUDE,MAPCENTERLONGITUDE));
+			if(!gmap || gmap.failed)
+			{
+			errorRetrievingMap ();
+			}
 			
 			//query yelp to get data for mapping
-			yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,800);
+			yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,errorRetrievingYelp,800);
 			yelpQuery.loadBusinesses();
 		}
 		

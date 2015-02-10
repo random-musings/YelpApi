@@ -23,6 +23,7 @@ var YelpQueries = function(
 			ajaxSuccessCallback,
 			ajaxErrorCallback,
 			loadingCompleteCallback,
+			errorCallback,
 			radius)
 {
 	this.ajaxErrorCallback = ajaxErrorCallback;
@@ -31,6 +32,7 @@ var YelpQueries = function(
 	this.loadCompleteFunc = loadingCompleteCallback;
 	this.yelpBusinesses  = [];
 	this.offset=0; //how many businesses were loaded from yelp
+	this.errorCallback = errorCallback;
 };
 
 
@@ -63,9 +65,9 @@ YelpQueries.prototype.loadMoreBusinesses = function(lastSearchResultCount)
 	//or check to see if we already have more than MAXRESULTS(100) businesses that were found
 	if(lastSearchResultCount< LIMIT || this.offset >MAXRESULTS)
 	{
-		if(this.loadingCompleteCallback)
+		if(this.loadCompleteFunc)
 		{
-			this.loadingCompleteCallback();
+			this.loadCompleteFunc();
 		}
 	}else
 	{
@@ -261,13 +263,10 @@ YelpQueries.prototype.searchYelp = function(offset)
 				url: yelpUrl,
 				dataType: "jsonp",
 				type: "GET",
+				timeout: 15000, 
 				cache: true, //very very important disables the _=[timestamp] at the end of the request
-				//success: function(data){
-				//		console.log(data);
-				//		yelpBusinesses.fillYelpData(data);
-				//		},
 				jsonpCallback: this.ajaxSuccessCallback,
-				error: function (xhr, status, errorThrown) { yelpQuery.errorInAjax(xhr, status, errorThrown);}
+				error: function(x,t,s){errorRetrievingYelp(x,t,s);}
 			});
 		return false;
 };
@@ -280,15 +279,10 @@ YelpQueries.prototype.searchYelp = function(offset)
 */
 YelpQueries.prototype.errorInAjax = function(xhr, status, errorThrown)
 {
-	console.log("ERROR");
-	console.log(xhr+" "+status+" "+errorThrown);
-	console.log("offset = "+this.offset);
-	if(this.offset>MAXRESULTS)
+	if(status==="timeout")
 	{
-		if(this.loadCompleteFunc)
-		{
-			this.loadCompleteFunc();
-		}
+		this.failed = true;
+		console.log("timeout");
 	}
 };
 
