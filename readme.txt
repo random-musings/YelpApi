@@ -94,3 +94,5 @@ The YelpData businesses array never changes once data has been downloaded from Y
 Additional Notes
 in order to display the "Deals" functionality I have manually added yelp restaurants with  deals.
 
+If the google map does not initialize correctly or Yelp is not available
+an error message is printed in the area where the filter text box is found
