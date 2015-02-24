@@ -91,13 +91,14 @@
 		function initialize()
 		{
 		//initia our map
-			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
-			gmap.map.setCenter(new google.maps.LatLng(MAPCENTERLATITUDE,MAPCENTERLONGITUDE));
-			if(!gmap || gmap.failed)
+			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk );
+		
+			if(gmap ==null || gmap.map ==null)
 			{
-			errorRetrievingMap ();
+				 errorRetrievingMap () ;
+				 return;
 			}
-			
+			gmap.map.setCenter(new google.maps.LatLng(MAPCENTERLATITUDE,MAPCENTERLONGITUDE));
 			//query yelp to get data for mapping
 			yelpQuery =   new YelpQueries('yelpQuery.fillYelpData','yelpQuery.errorInAjax',initKnockout,errorRetrievingYelp,800);
 			yelpQuery.loadBusinesses();

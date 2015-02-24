@@ -134,6 +134,7 @@ var Manager = function(gmap, db)
 //this is called after the 
 function initKnockout()
 {
+
 	mgr= new  Manager(gmap, yelpQuery.yelpBusinesses);
 	ko.applyBindings(mgr);
 
@@ -152,9 +153,10 @@ function errorRetrievingYelp (xhr, status, errorThrown)
 
 function errorRetrievingMap () 
 {
-	if(status==="timeout")
+	if(!gmap.loadCompleted)
 	{
 		$("#errorMsg").text( "Unable to connect to Google Maps.        Please refresh your browser and try again ");
 		$("#dealsId").hide();
 	}
+
 };

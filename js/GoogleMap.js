@@ -28,6 +28,8 @@ var infoWindow;
 */
 var GoogleMap = function(mapCanvasId, initialLocation)
 {
+	this.loadStarted = false;
+	this.loadCompleted = false;
 	this.mapId = mapCanvasId;
 	this.mapLocation = initialLocation;
 	this.map = {};
@@ -37,6 +39,7 @@ var GoogleMap = function(mapCanvasId, initialLocation)
 	this.initMap();
 	this.initPanorama();
 	this.infowindow = new google.maps.InfoWindow(); 
+	
 };
 
 
@@ -54,8 +57,24 @@ GoogleMap.prototype.initMap = function()
 		disableDefaultUI: true,
 		 zoomControl: false
 	};
-	 this.map = new google.maps.Map(document.getElementById(this.mapId),
-     this.mapOptions);
+	this.loadStarted = true;
+	
+	
+			
+	 this.map = new google.maps.Map(document.getElementById(this.mapId),this.mapOptions);
+	 
+	 	google.maps.event.addListenerOnce(this.map, 'idle', function(){
+				setTimeout(function(){errorRetrievingMap();},20000);//give us 20 seconds to get all data or fail
+			});
+	 //add the load events
+	google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+			//this part runs when the mapobject is created and rendered and thus deactivates the timeout
+			gmap.loadCompleted = true;
+		
+	});
+	
+	
+	
 };
 
 
@@ -143,12 +162,7 @@ GoogleMap.prototype.attachInfoWindow = function(map,marker,business)
 		//mgr.resetMarkers();
 		mgr.setCurrentBusiness(marker.title);
 		
-		if(!infoWindow)
-		{
-			infoWindow = new google.maps.InfoWindow({content:getInnerContent(mgr.model.currentBusiness())});
-		}
-				
-		infoWindow.content =  getInnerContent(mgr.model.currentBusiness());
+		infoWindow = new google.maps.InfoWindow({content:getInnerContent(mgr.model.currentBusiness())});
 		infoWindow.open(map,marker);
 
 		//set the clicked marker to have a yellow icon
