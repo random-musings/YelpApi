@@ -96,3 +96,38 @@ in order to display the "Deals" functionality I have manually added yelp restaur
 
 If the google map does not initialize correctly or Yelp is not available
 an error message is printed in the area where the filter text box is found
+
+
+Javascript files
+
+c:\git\Project5_yelp\js\Business.js
+	this class is the Knockout observable class that is holding our data downloaded from yelp
+
+c:\git\Project5_yelp\js\GoogleMap.js
+	this class handles the google map load, google marker display and info window display
+	it is called upon intialzation to create the google map
+
+c:\git\Project5_yelp\js\Manager.js
+	this is the manager class that coordiantes the knockout   front end with the data
+	upon initialization it is sent a link to the map and the list of yelp businesses
+
+c:\git\Project5_yelp\js\yelpConstants.js
+	this is a file of constan variables used to manage the application
+	
+c:\git\Project5_yelp\js\YelpQueries.js
+	this file sends asynchronous calls to yelp
+
+Javascript	LIBRARIES
+
+Jquery
+c:\git\Project5_yelp\js\libs\jquery.min.js
+
+Knockout
+c:\git\Project5_yelp\js\libs\knockout-3.2.0.js
+c:\git\Project5_yelp\js\libs\knockout.simpleGrid.3.0.js
+
+OAuth2 library (constructs our calls to yelp)
+c:\git\Project5_yelp\js\libs\oauth.js
+c:\git\Project5_yelp\js\libs\sha1.js
+
+
