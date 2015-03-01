@@ -11,12 +11,15 @@ var DEFAULTFILTER = "type words to filter list";
 var CALLBACK = "<CALLBACK>";  //key word for relacing yelp parameter
 var CATEGORYFILTER = "";	//yelp category filter
 var DEAL = "DEAL";  //the string to filter out businesses that don't offer coupons/deals
+
+var PINYELLOW = "FFFF00";	//color for standard pin marker
 var PINRED = "DD0000";	//color for standard pin marker
 var PINGREEN = "00AA00"; //color for pin marker indicating deals on business
 var PINCHAR = "<PINCHAR>"; //used to replace the number of the pin marker on the map 
 var PINCOLOR = "<PINCOLOR>"; //used to replace the pin color of the marker
 var GOOGLEPIN = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+PINCHAR+"|"+PINCOLOR;
-var GOOGLEYELLOWICON = "http://google.com/mapfiles/ms/micons/yellow-dot.png"; //a selected pin marker
+var GOOGLEYELLOWICON =  "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|"+PINYELLOW; //a selected pin marker
+
 var HTTPMETHOD = "GET";
 var YELPURI = "http://api.yelp.com/v2/search"; //the search URI for yelp
 var RADIUSFILTER = "<RADIUSFILTER>"; //how far to search for businesses
